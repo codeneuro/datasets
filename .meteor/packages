@@ -7,3 +7,14 @@
 meteor-platform
 autopublish
 insecure
+jquery
+http
+mrt:jquery-ui
+meteorhacks:npm
+
+
+npm-container
+raix:handlebar-helpers
+frozeman:animation-helper
+frozeman:animation-helper-velocity
+fortawesome:fontawesome

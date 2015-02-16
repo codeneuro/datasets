@@ -1,0 +1,250 @@
+@font-face{
+    font-family:"AvenirNext";
+    src:url("/font/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix");
+    src:url("/font/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix") format("eot"),url("/font/1e9892c0-6927-4412-9874-1b82801ba47a.woff") format("woff"),url("/font/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf") format("truetype"),url("/font/52a192b1-bea5-4b48-879f-107f009b666f.svg#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
+}
+
+@font-face{
+	font-family:"FjallaOne";
+	src:url("/font/FjallaOne-Regular.ttf") format("truetype");
+}
+
+body {
+	background-color: #E3E2DF;
+	font-family: 'AvenirNext', sans-serif;
+	color: rgb(80,80,80);
+}
+
+hr {
+	border-style: none;
+	color: rgb(150,150,150);
+	background-color: rgb(150,150,150);
+	height: 1px;
+}
+
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	padding: 25px 80px;
+	display: inline-block;
+	margin: 15px 30px;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-refresh {
+	background: rgb(255,255,255);
+	color: rgb(80,80,80);
+	border-radius: 50%;
+	width: 70px;
+	height: 70px;
+	padding: 0;
+	margin-top: 0px;
+}
+
+.btn-refresh:active {
+	border-color: #17954c;
+	color: rgb(240,240,240);
+}
+
+.btn-refresh:hover {
+	background: rgb(150,150,150);
+}
+
+.btn-output {
+	background: rgb(255,255,255);
+	color: rgb(80,80,80);
+	font-size: 16px;
+	width: 130px;
+	padding: 10px;
+	margin: 0px;
+	text-transform: uppercase;
+	-webkit-transition: color background-color 0.2s;
+	-moz-transition: color background-color 0.2s;
+	transition: color background-color 0.2s;
+}
+
+.btn-output:active {
+	color: rgb(240,240,240);
+}
+
+.row {
+	max-width: 1100px !important;
+}
+
+.container{
+	margin-left: -10px; 
+	margin-right: -10px;
+}
+
+.site-header {
+	margin-top: -10px;
+	background-color: rgb(115,115,115);
+	border-bottom: 1px solid rgb(20,20,20);
+}
+
+.title {
+	font-family: Consolas, sans-serif;
+	font-style: italic;
+	font-size: 55px;
+	margin-bottom: 20px;
+	margin-top: 30px;
+	color: rgb(220,220,220);
+}
+
+.main {
+	padding-top: 20px;
+}
+
+.data {
+	font-family: Consolas, serif;
+	font-size: 13px;
+	line-height: 0.6em;
+	padding-top: 10px;
+}
+
+
+.about {
+	height: 400px;
+	text-align: center;
+	margin-right: 30px;
+	font-size: 110%;
+}
+
+.browser {
+	font-family: "FjallaOne", sans-serif;
+	font-size: 20px;
+}
+
+
+.fields {
+	line-height: 0.8em;
+}
+
+.fields.fields-labels {
+	text-align: right;
+	margin-right: 30px;
+	font-style: italic;
+}
+
+.listing {
+	list-style: none;
+	border-left: thick solid #ff0000;
+	line-height: 2em;
+	height: 350px;
+}
+
+.listing.projects {
+	border-left: thick solid #E17B53;
+}
+
+.listing.datasets {
+	border-left: thick solid #E1D76A;
+}
+
+.listing.sources {
+	border-left: thick solid #E16868;
+}
+
+.directory {
+	margin-left: -40px;
+	padding-left: 20px;
+	margin-bottom: 3px;
+	transition: all .20s; 
+	cursor: pointer;
+}
+
+.directory:active {
+	font-weight: 1000;
+}
+
+.directory.sources.active {
+	background-color: #E16868;
+}
+
+.directory.sources:hover {
+	background-color: #E16868;
+}
+
+.directory.projects.active {
+	background-color: #E17B53;
+}
+
+.directory.projects:hover {
+	background-color: #E17B53;
+}
+
+.directory.datasets.active {
+	background-color: #E1D76A;
+}
+
+.directory.datasets:hover {
+	background-color: #E1D76A;
+}
+
+
+.output.Thunder {
+	border-radius: 0px;
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+.output.Download {
+	border-radius: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	margin-left: -4px;
+	margin-right: -4px;
+	border-left: 2px solid rgb(80,80,80);
+	border-right: 2px solid rgb(80,80,80);
+}
+
+.output.DBCloud {
+	border-radius: 0px;
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.output.Thunder:hover {
+	background-color:  #AA80D9;
+}
+
+.output.Thunder.active {
+	background-color: #AA80D9;
+}
+
+.output.Download:hover {
+	background-color: #38AEE0;
+}
+
+.output.Download.active {
+	background-color: #38AEE0;
+}
+
+.output.DBCloud:hover {
+	background-color: #4584DE;
+}
+
+.output.DBCloud.active {
+	background-color: #4584DE;
+}
+
+

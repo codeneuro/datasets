@@ -8,6 +8,7 @@ if (Meteor.isClient) {
 
   Meteor.startup(function () {
 
+    Meteor.call("rebuild")
     clearInfoFields()
 
   });

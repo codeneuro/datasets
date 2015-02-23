@@ -31,6 +31,7 @@ if (Meteor.isClient) {
     sources: function() {
       return SourcesDB.find({}, {
         sort: {
+          type: 1,
           name: 1
         }
       });
@@ -217,8 +218,13 @@ if (Meteor.isServer) {
         var url = baseurl + "?delimiter=/&prefix=" + s + "/"
         var projects = getDirsFromS3(url)
 
-        // load the info.json and add info
-        SourcesDB.insert({name: s})
+        if (String(s).indexOf("lab") > -1) {
+          type = "lab"
+        } else {
+          type = "other"
+        }
+
+        SourcesDB.insert({name: s, type: type})
 
         _.each(projects, function(p) {
 

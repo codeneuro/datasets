@@ -26,12 +26,11 @@
     <div class="column-3">
       <div class="about">
         <div class="row">
-            <p>Cloud-based access to large neural data sets</p>
+            <p style="font-style: italic; margin-bottom: 38px">A public resource for curated neural data sets, to encourage collaborative and reproducible research</p> 
+            <p style="font-size: 20px">Cloud-based access to large neural data sets</p>
             <i class="fa fa-database fa-2x"></i>
-            <p>For collaborative, open analysis development</p>
+            <p style="font-size: 20px">Supporting open analysis development</p>
             <i class="fa fa-group fa-2x"></i>
-            <p>Use columns to browse Click below to refresh</p>
-            {{> refresh}}
         </div>
       </div>
     </div>
@@ -107,7 +106,7 @@
 <template name="sourcesColumn">
   <ul class="listing sources">
   {{#each sources}}
-  <li class="directory sources {{selected}}">{{splitSlash name}}</li>
+  <li class="directory sources {{selected}}">{{splitSpace name}}</li>
   {{/each}}
   </ul>
 </template>

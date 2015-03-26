@@ -1,6 +1,6 @@
 ## Example two-photon calcium imaging data
 
-This dataset contains a set of images monitoring calcium flouresence in mouse vibrissal somatosensory cortex using two-photo laser scanning microscopy, while an animal performs a tactile virtual reality behavior (described in Sofroniew et al., 2013, Journal of Neuroscience).  These data were used as an example dataset in Freeman et al., 2014, Nature Methods.
+This dataset contains a set of images monitoring calcium flouresence in mouse vibrissal somatosensory cortex using two-photo laser scanning microscopy, while an animal performs a tactile virtual reality behavior (described in Sofroniew et al., 2013, Journal of Neuroscience). Data used as an example dataset in Freeman et al., 2014, Nature Methods.
 
 Data aquired by Nicholas Sofroniew in the lab of Karel Svoboda.
 

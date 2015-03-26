@@ -4,7 +4,7 @@ This dataset contains a set of images monitoring calcium flouresence in mouse vi
 
 Data aquired by Nicholas Sofroniew in the lab of Karel Svoboda.
 
-Existing location on S3
+Location on S3
 - `s3n://neuro.datasets/svoboda.lab/tactile.navigation/1/`
 
 Contents

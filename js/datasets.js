@@ -107,7 +107,7 @@ if (Meteor.isClient) {
         Session.set("location", this.location)
         Session.set("animal", this.animal)
         Session.set("experiment", this.experiment)
-        Session.set("data", this.data)
+        Session.set("method", this.method)
         Session.set("dimensions", this.dimensions)
         Session.set("contents", this.contents)
         Session.set("download", "ready")
@@ -124,7 +124,7 @@ if (Meteor.isClient) {
     location : function() { return Session.get("location")},
     animal : function() { return Session.get("animal")},
     experiment : function() { return Session.get("experiment")},
-    data : function() { return Session.get("data")},
+    method : function() { return Session.get("method")},
     dimensions : function() { return Session.get("dimensions")},
     contents : function() { return Session.get("contents")},
     dataset : function() { return Session.get("dataset")}
@@ -257,7 +257,7 @@ if (Meteor.isServer) {
               experiment: json.experiment,
               dimensions: json.dimensions,
               contents: dirs,
-              data: json.data
+              method: json.method
             }
             data.push(item)
             DatasetsDB.insert(item)
@@ -286,7 +286,7 @@ function clearInfoFields() {
   Session.set("location", "")
   Session.set("animal", "")
   Session.set("experiment", "")
-  Session.set("data", "")
+  Session.set("method", "")
   Session.set("dimensions", "")
   Session.set("contents", "")
   Session.set("download", "")

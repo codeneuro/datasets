@@ -171,6 +171,24 @@ if (Meteor.isClient) {
 
     download : function() {
       return Session.get("download")
+    },
+
+    images : function() {
+      var contents = Session.get("contents")
+      if (contents.indexOf("images")  > -1) {
+        return "True"
+      } else {
+        return "False"
+      }
+    },
+
+    series : function() {
+      var contents = Session.get("contents")
+      if (contents.indexOf("series")  > -1) {
+        return "True"
+      } else {
+        return "False"
+      }
     }
 
   })

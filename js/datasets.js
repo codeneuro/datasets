@@ -139,14 +139,14 @@ if (Meteor.isClient) {
     },
 
     selected: function() {
-      return Session.equals("method", this.slice(0,this.length)) ? "active" : '';
+      return Session.equals("outputMethod", this.slice(0,this.length)) ? "active" : '';
     }
 
   })
 
   Template.outputMethods.events({
     'click': function() {
-      Session.set("method", this.slice(0,this.length))
+      Session.set("outputMethod", this.slice(0,this.length))
     }
   })
 
@@ -165,8 +165,8 @@ if (Meteor.isClient) {
       return Session.get("dataset")
     },
 
-    method : function() {
-      return Session.get("method")
+    outputMethod : function() {
+      return Session.get("outputMethod")
     },
 
     download : function() {

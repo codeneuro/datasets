@@ -135,7 +135,7 @@ if (Meteor.isClient) {
   Template.outputMethods.helpers({
 
     methods : function() {
-      return ["Thunder", "Download", "DBCloud"]
+      return ["Amazon", "Download"]
     },
 
     selected: function() {
@@ -207,6 +207,43 @@ if (Meteor.isClient) {
   Template.downloadFromS3.events({
     'click': function() {
       downloadFromS3("/Users/freemanj11/test/")
+    }
+  })
+
+  Template.datasetThumbnail.helpers({
+
+    url : function() {
+      var baseurl = "http://s3.amazonaws.com/neuro.datasets/"
+      var subfolder = Session.get("source") + "/" + Session.get("project") + "/" + Session.get("dataset")
+      return baseurl + subfolder + "/thumbnail.png"
+    },
+
+    dataset : function() { return Session.get("dataset")}
+
+  })
+
+  Template.datasetThumbnail.events({
+    'click': function (e) {
+      var $this = $(e.target);
+      var src = $this.attr('src')
+      var width = 500
+      var height = 500
+      $("#large").html("<img class='thumbnail-large-inset' src=" + src + " width=" + width + "px + height=" + height + "px />")
+           .css("top", ( $(window).height() - height ) / 2+$(window).scrollTop() + "px")
+           .css("left", ( $(window).width() - width ) / 2+$(window).scrollLeft() + "px")
+           .fadeIn('fast');
+      $("#background").css({"opacity" : "0.7"})
+              .fadeIn('fast');  
+      $("#background").click(function(){
+        $("#background").fadeOut('fast');
+        $("#large").fadeOut('fast');
+      });
+      
+      $("#large").click(function(){
+        $("#background").fadeOut();
+        $("#large").fadeOut();
+      });
+      console.log($this.attr('src'))
     }
   })
 

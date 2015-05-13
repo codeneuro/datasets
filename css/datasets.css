@@ -24,6 +24,48 @@ hr {
 	height: 1px;
 }
 
+.thumbnail-small {
+	margin-top: 20px;
+	width: 200px;
+	border-radius: 15px;
+	border: solid 5px rgba(0, 0, 0, 0.0);
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+	cursor: -webkit-zoom-in;
+	cursor: -moz-zoom-in;
+}
+
+.thumbnail-small:hover {
+	border: solid 5px rgb(190,190,190);
+}
+
+.thumbnail-small:active {
+	border: solid 5px rgb(190,190,190);
+}
+
+.thumbnail-large {
+	display: none;
+	position: absolute;
+	z-index: 20;
+}
+
+.thumbnail-large-inset {
+	border: solid 8px rgba(255,255,255,0.5);
+	border-radius: 10px;
+}
+
+#background{
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: rgb(10,10,10);
+	z-index: 1;
+}
+
 .btn {
 	border: none;
 	font-family: inherit;
@@ -75,9 +117,9 @@ hr {
 	background: rgb(255,255,255);
 	color: rgb(80,80,80);
 	font-size: 16px;
-	width: 130px;
+	width: 150px;
 	padding: 10px;
-	margin: 0px;
+	margin: -2px;
 	text-transform: uppercase;
 	-webkit-transition: color background-color 0.2s;
 	-moz-transition: color background-color 0.2s;
@@ -204,7 +246,7 @@ hr {
 }
 
 
-.output.Thunder {
+.output.Amazon {
 	border-radius: 0px;
 	border-bottom-left-radius: 10px;
 	border-top-left-radius: 10px;
@@ -212,25 +254,16 @@ hr {
 
 .output.Download {
 	border-radius: 0px;
-	border-left: 0px;
-	border-right: 0px;
-	margin-left: -4px;
-	margin-right: -4px;
-	border-left: 2px solid rgb(80,80,80);
-	border-right: 2px solid rgb(80,80,80);
-}
-
-.output.DBCloud {
-	border-radius: 0px;
 	border-bottom-right-radius: 10px;
 	border-top-right-radius: 10px;
+	border-left: 2px solid rgb(80,80,80);
 }
 
-.output.Thunder:hover {
+.output.Amazon:hover {
 	background-color:  #AA80D9;
 }
 
-.output.Thunder.active {
+.output.Amazon.active {
 	background-color: #AA80D9;
 }
 
@@ -240,10 +273,6 @@ hr {
 
 .output.Download.active {
 	background-color: #38AEE0;
-}
-
-.output.DBCloud:hover {
-	background-color: #4584DE;
 }
 
 ::-webkit-scrollbar {

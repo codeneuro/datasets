@@ -234,6 +234,7 @@ if (Meteor.isClient) {
            .fadeIn('fast');
       $("#background").css({"opacity" : "0.7"})
               .fadeIn('fast');  
+
       $("#background").click(function(){
         $("#background").fadeOut('fast');
         $("#large").fadeOut('fast');

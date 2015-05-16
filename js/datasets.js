@@ -39,6 +39,10 @@ if (Meteor.isClient) {
 
     selected: function() {
       return Session.equals("source", this.name) ? "active" : ""
+    },
+
+    isLoaded: function() {
+      return (DatasetsDB.find().count() == 22) ? "True" : "";
     }
 
   })
@@ -94,7 +98,8 @@ if (Meteor.isClient) {
 
     selected: function() {
       return Session.equals("dataset", this.name) ? "active" : '';
-    }
+    },
+
   })
   
   Template.datasetsColumn.events({

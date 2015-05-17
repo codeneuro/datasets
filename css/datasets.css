@@ -301,8 +301,8 @@ Taken from http://tobiasahlin.com/spinkit/
 
 .spinner {
   margin: 100px auto 0;
-  width: 100px;
-  margin-left: 45px;
+  width: 20px;
+  margin-left: 85px;
   margin-top: 20px;
   text-align: center;
 }

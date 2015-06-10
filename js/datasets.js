@@ -140,7 +140,7 @@ if (Meteor.isClient) {
   Template.outputMethods.helpers({
 
     methods : function() {
-      return ["Amazon", "Download"]
+      return ["Amazon", "Notebook", "Download"]
     },
 
     selected: function() {
@@ -151,7 +151,19 @@ if (Meteor.isClient) {
 
   Template.outputMethods.events({
     'click': function() {
-      Session.set("outputMethod", this.slice(0,this.length))
+      var selected = this.slice(0,this.length)
+
+      Session.set("outputMethod", selected)
+
+      if ((selected == "Notebook") && !(Session.get("notebookURL"))) {
+        $.ajax({type: "POST", data: JSON.stringify({"path": "/"}), 
+          url: "http://notebooks.codeneuro.org:9000/api/spawn/"})
+        .done( function(data) {
+          console.log("retrieved notebook url")
+          Session.set("notebookURL", data.url)
+        })
+      } 
+
     }
   })
 
@@ -178,6 +190,12 @@ if (Meteor.isClient) {
       return Session.get("download")
     },
 
+    notebook : function() {
+      var base = Session.get("notebookURL")
+      var path = "notebooks/datasets/" + Session.get("source") + "/" + Session.get("project") + "/" + Session.get("dataset") + "/"
+      return base + path + "explore.ipynb"
+    },
+
     images : function() {
       var contents = Session.get("contents")
       if (contents.indexOf("images")  > -1) {
@@ -194,6 +212,10 @@ if (Meteor.isClient) {
       } else {
         return "False"
       }
+    },
+
+    isLoaded: function() {
+      return Session.get("notebookURL") ? "True" : "";
     }
 
   })
@@ -351,6 +373,8 @@ function clearInfoFields() {
   Session.set("dimensions", "")
   Session.set("contents", "")
   Session.set("download", "")
+  Session.set("notebookURL", "")
+  Session.set("outputMethod", "")
 }
 
 function downloadFromS3(localDir) {

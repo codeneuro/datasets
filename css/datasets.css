@@ -9,6 +9,18 @@
 	src:url("/font/FjallaOne-Regular.ttf") format("truetype");
 }
 
+a {
+	color: rgb(100,150,250);
+	text-decoration: none;
+	-webkit-transition: all 0.2s;
+	-moz-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+a:hover {
+	color: rgb(70,120,210);
+}
+
 body {
 	max-width: 100%;
   overflow-x: hidden;
@@ -116,8 +128,8 @@ hr {
 .btn-output {
 	background: rgb(255,255,255);
 	color: rgb(80,80,80);
-	font-size: 16px;
-	width: 150px;
+	font-size: 15px;
+	width: 120px;
 	padding: 10px;
 	margin: -2px;
 	text-transform: uppercase;
@@ -160,7 +172,7 @@ hr {
 
 .data {
 	font-family: Consolas, serif;
-	font-size: 13px;
+	font-size: 15px;
 	line-height: 0.6em;
 	padding-top: 10px;
 }
@@ -252,10 +264,20 @@ hr {
 	border-top-left-radius: 10px;
 }
 
+.output.Notebook {
+ 	border-radius: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	margin-left: -4px;
+	margin-right: -4px;
+	border-left: 2px solid rgb(80,80,80);
+	border-right: 2px solid rgb(80,80,80);
+}
+
 .output.Download {
 	border-radius: 0px;
-	border-bottom-right-radius: 10px;
-	border-top-right-radius: 10px;
+ 	border-bottom-right-radius: 10px;
+ 	border-top-right-radius: 10px;
 	border-left: 2px solid rgb(80,80,80);
 }
 
@@ -265,6 +287,14 @@ hr {
 
 .output.Amazon.active {
 	background-color: #AA80D9;
+}
+
+.output.Notebook:hover {
+	background-color: rgb(100,150,250);
+}
+
+.output.Notebook.active {
+	background-color: rgb(100,150,250);
 }
 
 .output.Download:hover {

@@ -10,7 +10,7 @@
 }
 
 a {
-	color: rgb(100,150,250);
+	color: #389CE0;
 	text-decoration: none;
 	-webkit-transition: all 0.2s;
 	-moz-transition: all 0.2s;
@@ -18,7 +18,7 @@ a {
 }
 
 a:hover {
-	color: rgb(70,120,210);
+	color: #1A6699;
 }
 
 body {
@@ -290,19 +290,19 @@ hr {
 }
 
 .output.Notebook:hover {
-	background-color: rgb(100,150,250);
+	background-color: #389CE0;
 }
 
 .output.Notebook.active {
-	background-color: rgb(100,150,250);
+	background-color: #389CE0;
 }
 
 .output.Download:hover {
-	background-color: #38AEE0;
+	background-color: #64CED2;
 }
 
 .output.Download.active {
-	background-color: #38AEE0;
+	background-color: #64CED2;
 }
 
 ::-webkit-scrollbar {

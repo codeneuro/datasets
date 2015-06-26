@@ -42,7 +42,7 @@ if (Meteor.isClient) {
     },
 
     isLoaded: function() {
-      return (DatasetsDB.find().count() == 22) ? "True" : "";
+      return (DatasetsDB.find({loaded: "True"}).count() == 1) ? "True" : "";
     }
 
   })
@@ -351,15 +351,12 @@ if (Meteor.isServer) {
         
       })
 
+      var item = {loaded: "True"}
+      DatasetsDB.insert(item)
+
     }
 
   })
-
-  Meteor.startup(function () {
-
-    Meteor.call("rebuild")
-
-  });
 
 }
 

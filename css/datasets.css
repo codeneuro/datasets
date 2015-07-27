@@ -1,3 +1,6 @@
+@import url(http://fonts.googleapis.com/css?family=Inconsolata:400,700);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic);
+
 @font-face{
     font-family:"AvenirNext";
     src:url("/font/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix");
@@ -10,6 +13,7 @@
 }
 
 a {
+	cursor: pointer;
 	color: #389CE0;
 	text-decoration: none;
 	-webkit-transition: all 0.2s;
@@ -67,6 +71,39 @@ hr {
 	border-radius: 10px;
 }
 
+.question-large-inset {
+	font-size: 18px;
+	border: solid 8px rgba(255,255,255,0.5);
+	border-radius: 10px;
+	background-color: rgb(50,50,50);
+	opacity: 0.9;
+	color: white;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+
+.question {
+	padding-left: 10px; 
+	font-size: 30px; 
+	color: rgb(80,80,80);
+	cursor: pointer;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.question:hover {
+	color: rgb(150,150,150);
+}
+
+.inline {
+	font-family: Inconsolata, serif;
+	padding-left: 15px;
+}
+
+
 #background{
 	display: none;
 	position: fixed;
@@ -80,8 +117,6 @@ hr {
 
 .btn {
 	border: none;
-	font-family: inherit;
-	font-size: inherit;
 	color: inherit;
 	background: none;
 	cursor: pointer;
@@ -127,6 +162,9 @@ hr {
 
 .btn-output {
 	background: rgb(255,255,255);
+	font-family: Source Sans Pro;
+	font-size: 20px;
+	font-weight: 600;
 	color: rgb(80,80,80);
 	font-size: 15px;
 	width: 120px;
@@ -158,7 +196,7 @@ hr {
 }
 
 .title {
-	font-family: Consolas, sans-serif;
+	font-family: Inconsolata, sans-serif;
 	font-style: italic;
 	font-size: 55px;
 	margin-bottom: 20px;
@@ -171,7 +209,7 @@ hr {
 }
 
 .data {
-	font-family: Consolas, serif;
+	font-family: Inconsolata, serif;
 	font-size: 15px;
 	line-height: 0.6em;
 	padding-top: 10px;

@@ -17,7 +17,7 @@
         <h1 class="title">DataSets</h1>
       </div>
       <div class="prefix-2 column-3 suffix-1">
-        <img style="margin-top: 18px; width: 350px; max-width: 350px" src="svg/logo.svg">
+        <a href='http://codeneuro.org'><img style="margin-top: 18px; width: 350px; max-width: 350px" src="svg/logo.svg"></a>
       </div>
     </div>
   </div>
@@ -93,7 +93,7 @@
 
         <!-- Get the data -->
         <div class="column-4">
-            <p style="font-size: 150%; margin-top: 7px;">Get the data</p>
+            <p style="font-size: 150%; margin-top: 7px;">Get the data{{ >question}}</p>
             <div style="margin-top: -3px">
               {{> outputMethods}}
             </div>
@@ -108,6 +108,10 @@
 
   
 </body>
+
+<template name="question">
+  <a><i class="fa fa-question-circle question"></i></a>
+</template>
 
 
 <template name="datasetThumbnail">
@@ -175,7 +179,12 @@
     {{/if}}
     {{#if $eq outputMethod "Notebook"}}
       {{#if $neq isLoaded ""}}
-        <p>click <a href={{notebook}} target="_blank">here</a> for live notebook</p>
+        {{#if $eq isLoaded "True"}}
+          <p>click <a href={{notebook}} target="_blank">here</a> for live notebook</p>
+        {{/if}}
+        {{#if $eq isLoaded "None"}}
+          <p>Example notebook coming soon</p>
+        {{/if}}
       {{else}}
         <p>loading...</p>
       {{/if}}

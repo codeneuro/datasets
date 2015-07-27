@@ -115,6 +115,7 @@ if (Meteor.isClient) {
         Session.set("method", this.method)
         Session.set("dimensions", this.dimensions)
         Session.set("contents", this.contents)
+        Session.set("notebook", this.notebook)
         Session.set("download", "ready")
       }
     }
@@ -155,12 +156,11 @@ if (Meteor.isClient) {
 
       Session.set("outputMethod", selected)
 
-      if ((selected == "Notebook") && !(Session.get("notebookURL"))) {
+      if ((selected == "Notebook") && !(Session.get("tmpnb")) && !(Session.get("notebook") == "")){
         $.ajax({type: "POST", data: JSON.stringify({"path": "/"}), 
           url: "http://notebooks.codeneuro.org:9000/api/spawn/"})
         .done( function(data) {
-          console.log("retrieved notebook url")
-          Session.set("notebookURL", data.url)
+          Session.set("tmpnb", data.url)
         })
       } 
 
@@ -191,9 +191,8 @@ if (Meteor.isClient) {
     },
 
     notebook : function() {
-      var base = Session.get("notebookURL")
-      var path = "notebooks/datasets/" + Session.get("source") + "/" + Session.get("project") + "/" + Session.get("dataset") + "/"
-      return base + path + "explore.ipynb"
+      var path = Session.get("tmpnb") + Session.get("notebook")
+      return path
     },
 
     images : function() {
@@ -215,7 +214,11 @@ if (Meteor.isClient) {
     },
 
     isLoaded: function() {
-      return Session.get("notebookURL") ? "True" : "";
+      if (Session.get("notebook") == "") {
+        return "None"
+      } else {
+        return Session.get("tmpnb") ? "True" : "";
+      }
     }
 
   })
@@ -299,76 +302,106 @@ if (Meteor.isServer) {
 
     rebuild : function() {
 
-      DatasetsDB.remove({});
-      SourcesDB.remove({});
-      ProjectsDB.remove({});
-
-      var data = []
-
-      baseurl = "http://s3.amazonaws.com/neuro.datasets/"
-
-      // list top-level directories
-      var url = baseurl + "?delimiter=/"
-      var sources = getDirsFromS3(url)
-
-      _.each(sources, function(s) {
-
-        // list second-level directories
-        var url = baseurl + "?delimiter=/&prefix=" + s + "/"
-        var projects = getDirsFromS3(url)
-
-        if (String(s).indexOf("lab") > -1) {
-          type = "lab"
+      // check time elapsed since last update
+      var torebuild = false
+      var current = new Date().getTime() / 1000
+      var check = DatasetsDB.findOne({loaded: "True"})
+      if (check) {
+        if (check.timestamp) {
+          var last = check.timestamp
+          if ((current - last) > 1800) {
+            console.log('time elapsed, rebuilding database')
+            torebuild = true
+          }
         } else {
-          type = "other"
+          torebuild = true
         }
+      } else {
+        console.log('cannot find last build, rebuilding database')
+        torebuild = true
+      }
 
-        SourcesDB.insert({name: s, type: type})
+      if (torebuild) {
 
-        _.each(projects, function(p) {
+        DatasetsDB.remove({});
+        SourcesDB.remove({});
+        ProjectsDB.remove({});
 
-          // list lowest-level directories
-          var url = baseurl + "?delimiter=/&prefix=" + s + "/" + p + "/"
-          var datasets = getDirsFromS3(url)
+        var data = []
 
-          // load the info.json and add info here
-          ProjectsDB.insert({
-            source: s, 
-            name: p})
+        baseurl = "http://s3.amazonaws.com/neuro.datasets/"
 
-          _.each(datasets, function(d) {
+        // list top-level directories
+        var url = baseurl + "?delimiter=/"
+        var sources = getDirsFromS3(url)
 
-            var file = baseurl + s + "/" + p + "/" + d + "/info.json"
-            var request = HTTP.get(file)
-            var json = JSON.parse(request.content)
+        _.each(sources, function(s) {
 
-            var url = baseurl + "?delimiter=/&prefix=" + s + "/" + p + "/" + d + "/"
-            var dirs = getDirsFromS3(url)
+          // list second-level directories
+          var url = baseurl + "?delimiter=/&prefix=" + s + "/"
+          var projects = getDirsFromS3(url)
 
-            var item = {
+          if (String(s).indexOf("lab") > -1) {
+            type = "lab"
+          } else {
+            type = "other"
+          }
+
+          SourcesDB.insert({name: s, type: type})
+
+          _.each(projects, function(p) {
+
+            // list lowest-level directories
+            var url = baseurl + "?delimiter=/&prefix=" + s + "/" + p + "/"
+            var datasets = getDirsFromS3(url)
+
+            // load the info.json and add info here
+            ProjectsDB.insert({
               source: s, 
-              project: p,
-              name: d, 
-              contributors: json.contributors,
-              location: json.location,
-              animal: json.animal,
-              preparation: json.preparation,
-              experiment: json.experiment,
-              dimensions: json.dimensions,
-              contents: dirs,
-              method: json.method
-            }
-            data.push(item)
-            DatasetsDB.insert(item)
-          
+              name: p})
+
+            _.each(datasets, function(d) {
+
+              var file = baseurl + s + "/" + p + "/" + d + "/info.json"
+              var request = HTTP.get(file)
+              var json = JSON.parse(request.content)
+
+              var url = baseurl + "?delimiter=/&prefix=" + s + "/" + p + "/" + d + "/"
+              var dirs = getDirsFromS3(url)
+
+              var notebook
+              if (p == "neurofinder") {
+                notebook = 'notebooks/neurofinder/intro.ipynb'
+              } else {
+                notebook = json.notebook ? json.notebook : ""
+              }
+
+              var item = {
+                source: s, 
+                project: p,
+                name: d, 
+                contributors: json.contributors,
+                location: json.location,
+                animal: json.animal,
+                preparation: json.preparation,
+                experiment: json.experiment,
+                dimensions: json.dimensions,
+                contents: dirs,
+                method: json.method,
+                notebook: notebook
+              }
+              data.push(item)
+              DatasetsDB.insert(item)
+            
+            })
+
           })
-
+          
         })
-        
-      })
 
-      var item = {loaded: "True"}
-      DatasetsDB.insert(item)
+        DatasetsDB.insert({loaded: "True", timestamp: new Date().getTime() / 1000})
+
+      }
 
     }
 
@@ -386,7 +419,8 @@ function clearInfoFields() {
   Session.set("dimensions", "")
   Session.set("contents", "")
   Session.set("download", "")
-  Session.set("notebookURL", "")
+  Session.set("notebook", "")
+  Session.set("tmpnb", "")
   Session.set("outputMethod", "")
 }
 

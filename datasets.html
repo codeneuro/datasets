@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 
-<body>
-
+<template name="main">
   <div id='large' class='thumbnail-large'></div>
   <div id='background'></div>
   
@@ -93,7 +92,7 @@
 
         <!-- Get the data -->
         <div class="column-4">
-            <p style="font-size: 150%; margin-top: 7px;">Get the data{{ >question}}</p>
+            <p style="font-size: 150%; margin-top: 7px;">Get the data{{ >question}}{{ >share}}</p>
             <div style="margin-top: -3px">
               {{> outputMethods}}
             </div>
@@ -106,11 +105,16 @@
 
   </div>
 
-  
-</body>
+</template>
 
 <template name="question">
   <a><i class="fa fa-question-circle question"></i></a>
+</template>
+
+<template name="share">
+  {{#if $neq dataset ""}}
+    <i class="fa fa-share share"></i>
+  {{/if}}
 </template>
 
 
@@ -140,17 +144,21 @@
 
 <template name="projectsColumn">
   <ul class="listing projects">
-  {{#each projects}}
-  <li class="directory projects {{selected}}">{{splitSpace name}}</li>
-  {{/each}}
+  {{#if $neq isLoaded ""}}
+    {{#each projects}}
+    <li class="directory projects {{selected}}">{{splitSpace name}}</li>
+    {{/each}}
+  {{/if}}
   </ul>
 </template>
 
 <template name="datasetsColumn">
   <ul class="listing datasets">
-  {{#each datasets}}
-  <li class="directory datasets {{selected}}">{{name}}</li>
-  {{/each}}
+  {{#if $neq isLoaded ""}}
+    {{#each datasets}}
+    <li class="directory datasets {{selected}}">{{name}}</li>
+    {{/each}}
+  {{/if}}
   </ul>
 </template>
 

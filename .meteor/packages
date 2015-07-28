@@ -18,3 +18,4 @@ raix:handlebar-helpers
 frozeman:animation-helper
 frozeman:animation-helper-velocity
 fortawesome:fontawesome
+iron:router

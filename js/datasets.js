@@ -8,10 +8,37 @@ if (Meteor.isClient) {
 
   Meteor.startup(function () {
 
+    // rebuild the database from S3
     Meteor.call("rebuild")
+    
+    // reset fields
+    Session.set("project", "")
+    Session.set("dataset", "")
     clearInfoFields()
 
   });
+
+  // route for dataset specification
+  Router.route('/dataset', function () {
+    if (this.params) {
+      var query = this.params.query
+      if (query.source && query.project && query.name) {
+        var item = DatasetsDB.findOne({source: query.source, project: query.project, name: query.name})
+        if (item) {
+          Session.set("source", query.source)
+          Session.set("project", query.project)
+          Session.set("dataset", query.name)
+          setInfoFields(item)
+        }
+      }
+    }
+    this.render('main');
+  });
+
+  // main route
+  Router.route('/', function () {
+    this.render('main');
+  })
 
   Handlebars.registerHelper("splitSlash", function(x) {
     return x.replace(".", " / ")
@@ -70,6 +97,10 @@ if (Meteor.isClient) {
 
     selected: function() {
       return Session.equals("project", this.name) ? "active" : '';
+    },
+
+    isLoaded: function() {
+      return (DatasetsDB.find({loaded: "True"}).count() == 1) ? "True" : "";
     }
 
   })
@@ -100,6 +131,10 @@ if (Meteor.isClient) {
       return Session.equals("dataset", this.name) ? "active" : '';
     },
 
+    isLoaded: function() {
+      return (DatasetsDB.find({loaded: "True"}).count() == 1) ? "True" : "";
+    }
+
   })
   
   Template.datasetsColumn.events({
@@ -107,16 +142,8 @@ if (Meteor.isClient) {
       if (_.isEmpty(this)) {
         clearInfoFields()
       } else {
+        setInfoFields(this)
         Session.set("dataset", this.name)
-        Session.set("contributors", this.contributors)
-        Session.set("location", this.location)
-        Session.set("animal", this.animal)
-        Session.set("experiment", this.experiment)
-        Session.set("method", this.method)
-        Session.set("dimensions", this.dimensions)
-        Session.set("contents", this.contents)
-        Session.set("notebook", this.notebook)
-        Session.set("download", "ready")
       }
     }
   })
@@ -274,7 +301,6 @@ if (Meteor.isClient) {
         $("#background").fadeOut();
         $("#large").fadeOut();
       });
-      console.log($this.attr('src'))
     }
   })
 
@@ -295,34 +321,51 @@ if (Meteor.isClient) {
     }
   })
 
+  Template.share.helpers({
+
+    dataset : function() {
+      return Session.get("dataset") ? "True" : ""
+    }
+
+  })
+
+  Template.share.events({
+    'click': function (e) {
+      var base = 'http://datasets.codeneuro.org/dataset?'
+      var path = base + 'source=' + Session.get('source') + '&project=' + Session.get('project') + '&name=' + Session.get('dataset')
+      var $this = $(e.target);
+      $("#large").html("<div class='share-large-inset' style='width:500px; height:125px'><p>Share this link</p><a href='" + path + "' target='_blank'>" + path + "</a></div>")
+           .css("top", ( $(window).height() - 175 ) / 2+$(window).scrollTop() + "px")
+           .css("left", ( $(window).width() - 550 ) / 2+$(window).scrollLeft() + "px")
+           .fadeIn('fast');
+      $("#background").css({"opacity" : "0.7"})
+              .fadeIn('fast');  
+      $("#background").click(function(){
+        $("#background").fadeOut('fast');
+        $("#large").fadeOut('fast');
+      });
+      $("#large").unbind();
+    }
+  })
+
 }
 
 if (Meteor.isServer) {
 
   Meteor.methods({
 
+    refresh : function() {
+
+      DatasetsDB.remove({})
+      SourcesDB.remove({})
+      ProjectsDB.remove({})
+      Meteor.call("rebuild")
+
+    },
+
     rebuild : function() {
 
-      // check time elapsed since last update
-      var torebuild = false
-      var current = new Date().getTime() / 1000
-      var check = DatasetsDB.findOne({loaded: "True"})
-      if (check) {
-        if (check.timestamp) {
-          var last = check.timestamp
-          if ((current - last) > 1800) {
-            console.log('time elapsed, rebuilding database')
-            torebuild = true
-          }
-        } else {
-          torebuild = true
-        }
-      } else {
-        console.log('cannot find last build, rebuilding database')
-        torebuild = true
-      }
-
-      if (torebuild) {
+      if (DatasetsDB.find({loaded: "True"}).count() == 0) {
 
         DatasetsDB.remove({});
         SourcesDB.remove({});
@@ -399,15 +442,25 @@ if (Meteor.isServer) {
           })
           
         })
-
         DatasetsDB.insert({loaded: "True", timestamp: new Date().getTime() / 1000})
-
       }
 
     }
 
   })
 
+}
+
+function setInfoFields(item){
+  Session.set("contributors", item.contributors)
+  Session.set("location", item.location)
+  Session.set("animal", item.animal)
+  Session.set("experiment", item.experiment)
+  Session.set("method", item.method)
+  Session.set("dimensions", item.dimensions)
+  Session.set("contents", item.contents)
+  Session.set("notebook", item.notebook)
+  Session.set("download", "ready")
 }
 
 function clearInfoFields() {
@@ -422,15 +475,13 @@ function clearInfoFields() {
   Session.set("download", "")
   Session.set("notebook", "")
   Session.set("tmpnb", "")
+  Session.set("share", "")
   Session.set("outputMethod", "")
 }
 
 function downloadFromS3(localDir) {
-
   console.log("Not yet implemented")
-
 }
-
 
 // get top-level directories from a S3 bucket URL
 function getDirsFromS3(url) {

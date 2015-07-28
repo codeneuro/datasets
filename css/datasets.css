@@ -71,7 +71,7 @@ hr {
 	border-radius: 10px;
 }
 
-.question-large-inset {
+.question-large-inset, .share-large-inset {
 	font-size: 18px;
 	border: solid 8px rgba(255,255,255,0.5);
 	border-radius: 10px;
@@ -84,7 +84,7 @@ hr {
 	padding-right: 50px;
 }
 
-.question {
+.question, .share {
 	padding-left: 10px; 
 	font-size: 30px; 
 	color: rgb(80,80,80);
@@ -94,7 +94,7 @@ hr {
 	transition: all 0.3s;
 }
 
-.question:hover {
+.question:hover, .share:hover {
 	color: rgb(150,150,150);
 }
 

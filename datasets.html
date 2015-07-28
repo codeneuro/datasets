@@ -172,27 +172,31 @@
 </template>
 
 <template name="getData">
-  {{#if $neq download ""}}
     {{#if $eq outputMethod "Amazon"}}
+      {{#if $neq download ""}}
         <p>bucket = "s3n://neuro.datasets/"</p>
         <p>path = "{{source}}/{{project}}/{{dataset}}/"</p>
+      {{/if}}
     {{/if}}
     {{#if $eq outputMethod "Notebook"}}
-      {{#if $neq isLoaded ""}}
-        {{#if $eq isLoaded "True"}}
-          <p>click <a href={{notebook}} target="_blank">here</a> for live notebook</p>
+      {{#if $neq download ""}}
+        {{#if $neq isLoaded ""}}
+          {{#if $eq isLoaded "True"}}
+            <p>click <a href={{notebook}} target="_blank">here</a> for live notebook</p>
+          {{/if}}
+          {{#if $eq isLoaded "None"}}
+            <p>Example notebook coming soon</p>
+          {{/if}}
+        {{else}}
+          <p>loading...</p>
         {{/if}}
-        {{#if $eq isLoaded "None"}}
-          <p>Example notebook coming soon</p>
-        {{/if}}
-      {{else}}
-        <p>loading...</p>
       {{/if}}
     {{/if}}
     {{#if $eq outputMethod "Download"}}
-      <p>Direct download coming soon</p>
+      {{#if $neq download ""}}
+        <p>Direct download coming soon</p>
+      {{/if}}
     {{/if}}
-  {{/if}}
 </template>
 
 <template name="refresh">

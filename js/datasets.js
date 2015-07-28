@@ -282,8 +282,8 @@ if (Meteor.isClient) {
     'click': function (e) {
       var $this = $(e.target);
       $("#large").html("<div class='question-large-inset' style='width:600px; height:450px'><h1>Ways to load</h1><p>All datasets are hosted on Amazon S3, and made available in three ways</p><p><b>(1)</b> Load directly from compute resources on Amazon EC2 (either a single node or a cluster) using the API in <a href='http://thunder-project.org'>Thunder</a><p class='inline'>tsc.loadImages(path + bucket + 'images')</p><p class='inline'>tsc.loadSeries(path + bucket + 'series')</p><p><b>(2)</b> Open a live <a href='https://jupyter.org/'>Jupyter notebook</a>, which lets you interactively execute code to explore and analyze the dataset (<em>currently only available for some datasets</em>)</p><p><b>(3)</b> Directly download a subsampled version of the data for local exploration (<em>coming soon</em>). Due to their size, full datasets are not avaialble for direct download.</p></div>")
-           .css("top", ( $(window).height() - 450 ) / 2+$(window).scrollTop() + "px")
-           .css("left", ( $(window).width() - 600 ) / 2+$(window).scrollLeft() + "px")
+           .css("top", ( $(window).height() - 500 ) / 2+$(window).scrollTop() + "px")
+           .css("left", ( $(window).width() - 700 ) / 2+$(window).scrollLeft() + "px")
            .fadeIn('fast');
       $("#background").css({"opacity" : "0.7"})
               .fadeIn('fast');  

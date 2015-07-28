@@ -291,6 +291,7 @@ if (Meteor.isClient) {
         $("#background").fadeOut('fast');
         $("#large").fadeOut('fast');
       });
+      $("#large").unbind();
     }
   })
 
